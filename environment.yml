@@ -1,0 +1,12 @@
+name: smp
+channels:
+ - conda-forge
+ - defaults
+dependencies:
+ - numpy
+ - pandas
+ - matplotlib
+ - python
+ - pip
+ - pip:
+   - snowmicropyn
