@@ -18,7 +18,8 @@ import sys
 from pathlib import Path
 
 from snowmicropyn import Profile
-from snowmicropyn import proksch2015
+from snowmicropyn import loewe2012
+from snowmicropyn.derivatives import parameterizations
 
 from matplotlib import pyplot as plt
 
@@ -59,18 +60,23 @@ def save_derivatives(p):
     p.export_meta(file = out_dir.joinpath(f'{p.name}_meta.csv'))
     # p.export_samples_niviz(export_settings = ExportSettings(), file = out_dir.joinpath(f'{p.name}_niviz.csv'))
 
-def plot_derivatives(p, p2015):
+def plot_derivatives(p, derivatives):
+    samples = p.samples 
+    depths = derivatives['distance'] 
+    densities  = derivatives['CR2020_density']
+    SSAs  = derivatives['CR2020_ssa']
+    
     fig, ax = plt.subplots()
     fig.subplots_adjust(right=0.75)
     # Plot distance on x and samples on y axis
-    ln1 = ax.plot(p.samples.distance, p.samples.force, label = 'Force', color = 'C0')
+    ln1 = ax.plot(depths, samples.force, label = 'Force', color = 'C0')
     # Plot derivatives
     ax2 = plt.twinx(ax)
-    ln3 = ax2.plot(p2015.distance, p2015.P2015_density, label = 'Density', color = 'C1')
+    ln3 = ax2.plot(depths, densities, label = 'Density', color = 'C1')
 
     ax3 = plt.twinx(ax)
     ax3.spines["right"].set_position(("axes", 1.2))
-    ln2 = ax3.plot(p2015.distance, p2015.P2015_ssa, label = 'SSA', color = 'C2')
+    ln2 = ax3.plot(depths, SSAs, label = 'SSA', color = 'C2')
     make_patch_spines_invisible(ax3)
     ax3.spines["right"].set_visible(True)
 
@@ -105,12 +111,14 @@ if __name__ == '__main__':
         out_dir = Path(args[2])
 
     profile = load_profile(in_fp)
+    
     #this is the SMP GitHub package to retrieve the SSA and density for each depth increment within the dataset
-    derivatives = proksch2015.calc(profile.samples)
+    param = parameterizations['CR2020'] 
+    loewe2012_df = loewe2012.calc(profile.samples, param.window_size, param.overlap)
+    derivatives = loewe2012_df
+    derivatives = derivatives.merge(param.calc_from_loewe2012(loewe2012_df))
 
     if out_dir:
         save_derivatives(profile)
     
     plot_derivatives(profile, derivatives)
-    
-    
