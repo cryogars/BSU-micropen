@@ -19,7 +19,7 @@ from pathlib import Path
 
 from snowmicropyn import Profile
 from snowmicropyn import proksch2015
-
+from snowmicropyn.parameterizations import calonne_richter2020
 from matplotlib import pyplot as plt
 
 # class of export settings for NiVIZ
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     profile = load_profile(in_fp)
     #this is the SMP GitHub package to retrieve the SSA and density for each depth increment within the dataset
-    derivatives = proksch2015.calc(profile.samples)
+    derivatives = calonne_richter2020.calc(samples = profile.samples)
 
     if out_dir:
         save_derivatives(profile)

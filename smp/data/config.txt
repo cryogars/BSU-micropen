@@ -1,0 +1,25 @@
+File Number (0-9999) :0020
+File Name (4 chars)  :S19M
+Default Length [mm]  :1600
+SMP Serial           :19
+Sensor Type          :9207
+Sensor Serial        :1116517
+Sensitivity [pC/N]   :116
+Amplifier Type       :5030A
+Amplifier Serial     :1764829
+Amplifier Range (pC) :5000
+Overload [N]         :42
+Maximum Length [mm]  :1680
+Samples per mm       :242
+GPS ON (on=1)        :1
+Offset [N]           :0.00
+Tip Diameter [um]    :5000
+Velocity [mm/s]      :20
+Screen Brightness [%]:60
+####################################################################
+####################################################################
+####################################################################
+Please read the manual for detailed explanation
+Manipulating the parameters might damage the Snow Micro Pen
+####################################################################
+##################################################                                ################################                       
